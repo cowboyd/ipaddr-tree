@@ -23,8 +23,17 @@ describe IPAddr::Tree::Range do
     iprange('0.0.0.2', '0.0.0.9').should eql ['0.0.0.2/31', '0.0.0.4/30', '0.0.0.8/31']
   end
 
+  it 'ahem' do
+    iprange('0.0.0.0/29', '0.0.0.6/32').should eql ["0.0.0.0/30", "0.0.0.4/31", "0.0.0.6/32"]
+  end
+
   it 'handles can handle weirdness' do
     iprange('0.0.0.4', '0.0.0.6').should eql ['0.0.0.4/31', '0.0.0.6/32']
+    iprange('155.48.168.0','155.48.171.0').should eql [
+      '155.48.168.0/23',
+      '155.48.170.0/24',
+      '155.48.171.0/32'
+    ]
   end
 
   it "handles some real ranges from the wild" do
@@ -39,6 +48,7 @@ describe IPAddr::Tree::Range do
       '212.138.110.64/26',
       '212.138.110.128/32'
     ]
+    iprange('155.48.0.0', '155.48.255.255')
   end
 
 

@@ -22,6 +22,10 @@ class IPAddr
       mask(prefix_length + 1).set(@addr + 2 ** (block_length - 1)) if block_length > 0
     end
 
+    def leaf?
+      prefix_length == family_length
+    end
+
     def cidr_notation
       "#{to_s}/#{prefix_length}"
     end

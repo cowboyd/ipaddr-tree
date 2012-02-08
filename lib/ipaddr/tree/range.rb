@@ -6,19 +6,19 @@ class IPAddr
       other = IPAddr.new(other.to_s) unless other.is_a?(IPAddr)
       return other.blocks_until(self) if other < self
       if include? other
-        if include? other.next_sibling
-          left_child.blocks_until(other)
-        else
+        if next_sibling.include? other.next_sibling
           [self]
-        end
-      elsif parent.include? next_sibling
-        if next_sibling.left_child && next_sibling.left_child.include?(other)
-          [self] + next_sibling.left_child.blocks_until(other)
+        elsif left_child && left_child.include?(other)
+          left_child.blocks_until(other)
+        elsif leaf?
+          [self]
         else
-          parent.blocks_until(other)
+          [left_child] + right_child.blocks_until(other)
         end
-      else
+      elsif parent.include? previous_sibling
         [self] + next_sibling.blocks_until(other)
+      else
+        parent.blocks_until(other)
       end
     end
   end

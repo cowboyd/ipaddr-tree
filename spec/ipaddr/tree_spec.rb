@@ -9,28 +9,33 @@ describe IPAddr::Tree do
     its(:right_child) {should match_cidr "0.0.0.6/31"}
     its(:next_sibling) {should match_cidr "0.0.0.8/30"}
     its(:previous_sibling) {should match_cidr "0.0.0.0/30"}
+    it {should_not be_leaf}
   end
 
   describe "a leaf node like 0.0.0.7/32" do
     subject {IPAddr.new '0.0.0.7/32'}
     its(:left_child) {should be_nil}
     its(:right_child) {should be_nil}
+    it {should be_leaf}
   end
 
   describe "the far left corner" do
     subject {IPAddr.new "0.0.0.0/32"}
     its(:previous_sibling) {should be_nil}
     its(:next_sibling) {should match_cidr '0.0.0.1/32'}
+    it {should be_leaf}
   end
 
   describe "the far right corner" do
     subject {IPAddr.new '255.255.255.255'}
     its(:next_sibling) {should be_nil}
     its(:previous_sibling) {should match_cidr '255.255.255.254/32'}
+    it {should be_leaf}
   end
 
   describe "the root of the tree" do
     subject {IPAddr.new '0.0.0.0/0'}
     its(:parent) {should be_nil}
+    it {should_not be_leaf}
   end
 end
