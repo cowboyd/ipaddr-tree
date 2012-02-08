@@ -24,12 +24,23 @@ describe IPAddr::Tree::Range do
   end
 
   it 'handles can handle weirdness' do
-    iprange('0.0.0.4', '0.0.0.6').should eql ['0.0.0.2/31', '0.0.0.4/31', '0.0.0.6/32']
+    iprange('0.0.0.4', '0.0.0.6').should eql ['0.0.0.4/31', '0.0.0.6/32']
   end
 
-  it "generates some real ranges" do
+  it "handles some real ranges from the wild" do
     iprange('64.70.116.50', '64.70.116.54').should eql ['64.70.116.50/31', '64.70.116.52/31', '64.70.116.54/32']
+    iprange('212.138.110.1','212.138.110.128').should eql [
+      '212.138.110.1/32',
+      '212.138.110.2/31',
+      '212.138.110.4/30',
+      '212.138.110.8/29',
+      '212.138.110.16/28',
+      '212.138.110.32/27',
+      '212.138.110.64/26',
+      '212.138.110.128/32'
+    ]
   end
+
 
   def iprange(start, finish)
     IPAddr.new(start).blocks_until(IPAddr.new(finish)).map(&:cidr_notation)

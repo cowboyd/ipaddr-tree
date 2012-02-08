@@ -5,16 +5,20 @@ class IPAddr
     def blocks_until(other)
       other = IPAddr.new(other.to_s) unless other.is_a?(IPAddr)
       return other.blocks_until(self) if other < self
-      if self.include? other
-        if self.include? other.next_sibling
-          self.left_child.blocks_until(other)
+      if include? other
+        if include? other.next_sibling
+          left_child.blocks_until(other)
         else
           [self]
         end
-      elsif self.parent.include? self.next_sibling
-        self.parent.blocks_until(other)
+      elsif parent.include? next_sibling
+        if next_sibling.left_child && next_sibling.left_child.include?(other)
+          [self] + next_sibling.left_child.blocks_until(other)
+        else
+          parent.blocks_until(other)
+        end
       else
-        [self] + self.next_sibling.blocks_until(other)
+        [self] + next_sibling.blocks_until(other)
       end
     end
   end
