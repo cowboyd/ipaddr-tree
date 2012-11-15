@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["cowboyd@thefrontside.net"]
   gem.description   = %q{Map IP Space onto a binary tree}
   gem.summary       = %q{Sometimes it's helpful to be able to navigate around CIDR space like you would a tree}
-  gem.homepage      = "http://github.com/summon/ipaddr-tree.rb"
+  gem.homepage      = "https://github.com/cowboyd/ipaddr-tree"
 
   gem.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   gem.files         = `git ls-files`.split("\n")
