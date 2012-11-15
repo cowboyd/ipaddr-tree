@@ -1,10 +1,10 @@
 rvm:
-  - 1.8.6
   - 1.8.7
   - 1.9.2
   - 1.9.3
   - jruby-18
   - jruby-19
+  - rbx-head
 notifications:
   recipients:
     - cowboyd@thefrontside.net
